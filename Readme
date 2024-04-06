@@ -1,1 +1,26 @@
 
+# Orange Ripeness Classifier
+
+*****
+## Table of Contents
+
+
+
+- [Orange Classifier](#Orange_Classifier)
+## Table of Contents
+
+- [Oranges Ripeness and Unripeness](#oranges-ripeness-and-unripeness)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Description](#description)
+  - [Example](#example)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [About Us](#about-us)
+
+
+*****This repository contains an implementation of a Support Vector Machine (SVM) classifier to determine the ripeness of oranges based on their images. The classifier can distinguish between ripe and unripe oranges, aiding in fruit sorting and quality assessment processes.
