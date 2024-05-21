@@ -31,10 +31,11 @@ The SVM algorithm is chosen for its effectiveness in binary classification tasks
 
 **********
 ## Features
+
 Support Vector Machines (SVMs) offer several benefits for image classification.
 Support Vector Machines (SVMs) excel in image classification due to their ability to effectively handle high-dimensional data, prevent overfitting, and generalize well with small to medium-sized datasets.
-Their versatile kernel functions enable capturing complex patterns, while the global optimization ensures reliable performance. 
-Moreover, SVMs are memory-efficient and offer interpretable decision boundaries, making them a powerful choice for image classification tasks.
+SVMs are memory-efficient and offer interpretable decision boundaries, making them a powerful choice for image classification tasks.
+
 
 # Efficiency
 Support Vector Machine (SVM) is known for its efficiency in handling high-dimensional feature spaces and its effectiveness in binary classification tasks. When it comes to image classification for detecting ripe and unripe oranges, SVM's efficiency depends on several factors, including the choice of features and the quality of the dataset.
