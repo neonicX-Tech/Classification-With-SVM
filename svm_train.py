@@ -34,51 +34,85 @@ def generate_hsv_histogram(image, hue_bins=8, saturation_bins=2, value_bins=4):
     return hist
 
 def generate_histograms_from_folder(folder_path):
+    # Initialize empty lists to store histograms and labels
     histograms = []
     labels = []
 
+    # Iterate through each folder in the given directory
     for folder in os.listdir(folder_path):
         folder_label = folder
+        # Set label to 1 if folder name is "ripe", otherwise set it to 0
         label = 1 if folder_label == "ripe" else 0
         folder_path_full = os.path.join(folder_path, folder)
+
+        # Iterate through each file in the current folder
         for filename in os.listdir(folder_path_full):
             image_path = os.path.join(folder_path_full, filename)
             image = cv2.imread(image_path)
 
+            # Check if the image was successfully read
             if image is None:
                 print(f"Error: Image '{filename}' not found!")
                 continue
 
+            # Generate the HSV histogram for the image
             hist = generate_hsv_histogram(image)
+            # Append the histogram and label to their respective lists
             histograms.append(hist)
             labels.append(label)
 
+    # Convert the lists of histograms and labels to NumPy arrays
     histograms = np.array(histograms)
     labels = np.array(labels)
 
+    # Return the histograms and labels as NumPy arrays
     return histograms, labels
 
 def train_svm(features, labels, C=1.0, gamma=0.1, kernel=cv2.ml.SVM_RBF):
+    # Create an SVM object
     svm = cv2.ml.SVM_create()
+    
+    # Set the kernel type for the SVM
     svm.setKernel(kernel)
+    
+    # Set the SVM type to C-Support Vector Classification
     svm.setType(cv2.ml.SVM_C_SVC)
+    
+    # Set the regularization parameter
     svm.setC(C)
+    
+    # Set the gamma parameter for the kernel function
     svm.setGamma(gamma)
+    
+    # Train the SVM with the provided features and labels
     svm.train(features, cv2.ml.ROW_SAMPLE, labels)
+    
+    # Return the trained SVM model
     return svm
 
+
 def evaluate_svm(svm, x_test, y_test, model_filename='svm_data_1.dat'):
+    # Save the trained SVM model to a file
     svm.save(model_filename)
+    
+    # Use the SVM model to predict the labels for the test data
     _, y_pred = svm.predict(x_test)
+    
+    # Convert the predicted labels to integers and flatten the array
     y_pred = y_pred.astype(int).flatten()
+    
+    # Flatten the true labels array
     y_test = y_test.flatten()
 
+    # Calculate the accuracy of the model
     accuracy = np.mean(y_pred == y_test) * 100.0
     print(f"Accuracy: {accuracy:.2f}%")
 
+    # Print the classification report
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred))
 
+    # Print the confusion matrix
     print("\nConfusion Matrix:")
     conf_matrix = confusion_matrix(y_test, y_pred)
     print(conf_matrix)
