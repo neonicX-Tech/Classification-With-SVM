@@ -14,9 +14,7 @@ Oranges undergo color changes as they ripen, making it feasible to classify thei
   - [Features](#features)
     - [Efficiency](#Efficiency)
   - [Example](#example)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
   - [Usage](#usage)
   - [Contributing](#contributing)
   - [License](#license)
@@ -72,9 +70,16 @@ our dtatset beging with under suppoertd light and train it othis below show some
 **********
 ## Installation
 
-pip opencv-python scikit-learn numpy
+``pip opencv-python scikit-learn numpy argparse``
 
-pip install -r requirements.txt
+``pip install -r requirements.txt``
+
 **********
+## Contributing
 
 
+*******
+## License
+
+*******
+## About Us
