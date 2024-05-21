@@ -34,6 +34,17 @@ def generate_hsv_histogram(image, hue_bins=8, saturation_bins=2, value_bins=4):
     return hist
 
 def generate_histograms_from_folder(folder_path):
+    """
+    Generates HSV histograms for all images in a given directory and assigns labels based on the folder name.
+
+    Parameters:
+    - folder_path: Path to the main directory containing subfolders of images.
+
+    Returns:
+    - histograms: A NumPy array of histograms for all images.
+    - labels: A NumPy array of labels corresponding to the histograms.
+    """
+
     # Initialize empty lists to store histograms and labels
     histograms = []
     labels = []
@@ -68,30 +79,57 @@ def generate_histograms_from_folder(folder_path):
     # Return the histograms and labels as NumPy arrays
     return histograms, labels
 
+
 def train_svm(features, labels, C=1.0, gamma=0.1, kernel=cv2.ml.SVM_RBF):
-    # Create an SVM object
+    """
+    Trains an SVM (Support Vector Machine) model using the provided features and labels.
+
+    Parameters:
+    - features: The training data, a NumPy array where each row is a feature vector.
+    - labels: The labels corresponding to the training data, a NumPy array of integers.
+    - C: The regularization parameter (default is 1.0). This parameter controls the trade-off between achieving a low training error and a low testing error.
+    - gamma: The kernel coefficient for the RBF (Radial Basis Function) kernel (default is 0.1). It defines how far the influence of a single training example reaches.
+    - kernel: The type of SVM kernel to be used (default is RBF). Other options include linear, polynomial, and sigmoid kernels.
+
+    Returns:
+    - svm: The trained SVM model.
+    """
+    
+    # Create an SVM object using OpenCV's machine learning module
     svm = cv2.ml.SVM_create()
     
-    # Set the kernel type for the SVM
+    # Set the kernel type for the SVM. In this case, the default is RBF (Radial Basis Function)
     svm.setKernel(kernel)
     
-    # Set the SVM type to C-Support Vector Classification
+    # Set the SVM type to C-Support Vector Classification, which is the most common type of SVM
     svm.setType(cv2.ml.SVM_C_SVC)
     
-    # Set the regularization parameter
+    # Set the regularization parameter C, which controls the trade-off between achieving a low training error and a low testing error
     svm.setC(C)
     
-    # Set the gamma parameter for the kernel function
+    # Set the gamma parameter for the kernel function. For RBF, it defines the influence range of a single training example
     svm.setGamma(gamma)
     
-    # Train the SVM with the provided features and labels
+    # Train the SVM with the provided features (training data) and labels (training labels)
+    # cv2.ml.ROW_SAMPLE indicates that the samples are represented by rows in the feature matrix
     svm.train(features, cv2.ml.ROW_SAMPLE, labels)
     
     # Return the trained SVM model
     return svm
 
 
+
 def evaluate_svm(svm, x_test, y_test, model_filename='svm_data_1.dat'):
+    """
+    Evaluates the performance of the SVM model on the test dataset and saves the trained model.
+
+    Parameters:
+    - svm: The trained SVM model.
+    - x_test: The test data features.
+    - y_test: The true labels for the test data.
+    - model_filename: The filename to save the trained SVM model (default is 'svm_data_1.dat').
+    """
+    
     # Save the trained SVM model to a file
     svm.save(model_filename)
     
@@ -117,24 +155,28 @@ def evaluate_svm(svm, x_test, y_test, model_filename='svm_data_1.dat'):
     conf_matrix = confusion_matrix(y_test, y_pred)
     print(conf_matrix)
 
+
+
 def main(args):
+    # Get the input path for the dataset folder from the arguments
     input_path = args.dataset_folder
-    if not input_path:
-        input_path = input("Enter input images path folder: ")
-    while not os.path.exists(input_path) or not os.path.isdir(input_path):
-        print("Error: Invalid input path. Please provide a valid directory path.")
-        input_path = input("Enter input images path folder: ")
     
+    # Generate histograms and corresponding labels from the input folder
     histograms, extracted_labels = generate_histograms_from_folder(input_path)
+    print(histograms.shape)
+    # Split the data into training and testing sets
     x_train, x_test, y_train, y_test = train_test_split(histograms, extracted_labels, test_size=0.2, random_state=42)
     print(f"Training set size: {x_train.shape}, Testing set size: {x_test.shape}")
     
+    # Train the SVM model using the training data
     svm_model = train_svm(x_train, y_train, C=args.C, gamma=args.gamma, kernel=args.kernel)
+    
+    # Evaluate the trained SVM model using the testing data
     evaluate_svm(svm_model, x_test, y_test, model_filename=args.model_filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train an SVM model for Orange Ripeness Detection")
-    parser.add_argument('--dataset_folder', default="/content/drive/MyDrive/orange_dataset/dataset_1", type=str, help='Path to the dataset folder')
+    parser.add_argument('-d','--dataset_folder', default="/content/drive/MyDrive/orange_dataset/dataset_1", type=str, help='Path to the dataset folder')
     parser.add_argument('--kernel', type=str, default=cv2.ml.SVM_RBF, help='Kernel type for SVM')
     parser.add_argument('--C', type=float, default=1.0, help='Regularization parameter')
     parser.add_argument('--gamma', type=float, default=0.1, help='Kernel coefficient for RBF')
