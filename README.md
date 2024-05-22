@@ -68,7 +68,7 @@ The project involves the following steps:
 our dtatset beging with under suppoertd light and train it othis below show some example of that 
 | Category | Image Example |
 |----------|---------------|
-| Ripe     | ![Ripe Orange](example_images/ripe_example.jpg) |
+| Ripe     | ![Ripe Orange]([example_images/ripe_example.jpg](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/1.jpg)) |
 | Unripe   | ![Unripe Orange](example_images/unripe_example.jpg) |
 
 **********
