@@ -66,6 +66,10 @@ The project involves the following steps:
 ******
 # Example
 our dtatset beging with under suppoertd light and train it othis below show some example of that 
+| Category | Image Example |
+|----------|---------------|
+| Ripe     | ![Ripe Orange](example_images/ripe_example.jpg) |
+| Unripe   | ![Unripe Orange](example_images/unripe_example.jpg) |
 
 **********
 ## Installation
