@@ -176,7 +176,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train an SVM model for Orange Ripeness Detection")
-    parser.add_argument('-d','--dataset_folder', default="/content/drive/MyDrive/orange_dataset/dataset_1", type=str, help='Path to the dataset folder')
+    parser.add_argument('-d','--dataset_folder', default="/content/drive/MyDrive/orange_dataset", type=str, help='Path to the dataset folder')
     parser.add_argument('--kernel', type=str, default=cv2.ml.SVM_RBF, help='Kernel type for SVM')
     parser.add_argument('--C', type=float, default=1.0, help='Regularization parameter')
     parser.add_argument('--gamma', type=float, default=0.1, help='Kernel coefficient for RBF')
