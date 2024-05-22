@@ -1,7 +1,6 @@
 import os
 import cv2
 import argparse
-from google.colab.patches import cv2_imshow
 import numpy as np
 
 def generate_hsv_histogram(image):
