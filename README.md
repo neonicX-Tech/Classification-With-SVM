@@ -9,17 +9,15 @@ Oranges undergo color changes as they ripen, making it feasible to classify thei
 
 ## Table of Contents
 
-- [Orange Classifier](#Orange Classifier)
-  - [Overview](#Overview)
+- [Orange Ripeness Classifier](#orange-ripeness-classifier)
+  - [Overview](#overview)
   - [Features](#features)
-    - [Efficiency](#Efficiency)
+    - [Efficiency](#efficiency)
   - [Example](#example)
-  - [Prerequisites](#prerequisites)
-  - [Usage](#usage)
+  - [Installation](#installation)
   - [Contributing](#contributing)
   - [License](#license)
   - [About Us](#about-us)
-
 
 ***************
 ## Overview
@@ -37,8 +35,9 @@ SVMs are memory-efficient and offer interpretable decision boundaries, making th
 
 # Efficiency
 Support Vector Machine (SVM) is known for its efficiency in handling high-dimensional feature spaces and its effectiveness in binary classification tasks. When it comes to image classification for detecting ripe and unripe oranges, SVM's efficiency depends on several factors, including the choice of features and the quality of the dataset.
-Here's how SVM can efficiently utilize the features mentioned in the Features section for classifying oranges:
-- **`Color Features:** SVM can efficiently learn to separate ripe and unripe oranges based on their color distributions. Color histograms provide a compact representation of color information, making them computationally efficient for SVM classification.
+
+**Here's how SVM can efficiently utilize the features mentioned in the Features section for classifying oranges:**
+- **`Color Features:`** SVM can efficiently learn to separate ripe and unripe oranges based on their color distributions. Color histograms provide a compact representation of color information, making them computationally efficient for SVM classification.
 
 - **`Texture Features:`** While texture descriptors like Local Binary Patterns (LBP) or Gray-Level Co-occurrence Matrix (GLCM) statistics can increase the dimensionality of the feature space, SVM is well-suited for handling such high-dimensional data efficiently. SVM can efficiently learn decision boundaries in complex feature spaces, enabling effective utilization of texture features for orange classification.
 
@@ -55,7 +54,7 @@ Here's how SVM can efficiently utilize the features mentioned in the Features se
 ******
 # Description
 
-For classifiaction of orange we use HSV_Histogram feature extraction for SVM.
+For the classification of oranges, we use HSV histogram feature extraction in the section of color features for the SVM model.
 
 The project involves the following steps:
 1. Generating HSV histograms from images of oranges.
@@ -65,20 +64,21 @@ The project involves the following steps:
 
 ******
 # Example
-our dtatset beging with under suppoertd light and train it othis below show some example of that 
-## Example Images
+our dataset begins with images captured under varying lighting conditions. Below are some examples of the images used in our dataset.
 
 | Category | Image Example |
 |----------|---------------|
-| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/1.jpg) |
-| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/5.jpg) |
+| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/3.jpg)|
+| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/5.jpg)|
 
 **********
 ## Installation
 
-``pip opencv-python scikit-learn numpy argparse``
+ **Dependencies:** Install the necessary Python libraries
 
-``pip install -r requirements.txt``
+ **`pip opencv-python scikit-learn numpy argparse`**
+
+ **`pip install -r requirements.txt`**
 
 **********
 ## Contributing
