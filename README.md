@@ -14,9 +14,7 @@ Oranges undergo color changes as they ripen, making it feasible to classify thei
   - [Features](#features)
     - [Efficiency](#Efficiency)
   - [Example](#example)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
   - [Usage](#usage)
   - [Contributing](#contributing)
   - [License](#license)
@@ -31,10 +29,11 @@ The SVM algorithm is chosen for its effectiveness in binary classification tasks
 
 **********
 ## Features
+
 Support Vector Machines (SVMs) offer several benefits for image classification.
 Support Vector Machines (SVMs) excel in image classification due to their ability to effectively handle high-dimensional data, prevent overfitting, and generalize well with small to medium-sized datasets.
-Their versatile kernel functions enable capturing complex patterns, while the global optimization ensures reliable performance. 
-Moreover, SVMs are memory-efficient and offer interpretable decision boundaries, making them a powerful choice for image classification tasks.
+SVMs are memory-efficient and offer interpretable decision boundaries, making them a powerful choice for image classification tasks.
+
 
 # Efficiency
 Support Vector Machine (SVM) is known for its efficiency in handling high-dimensional feature spaces and its effectiveness in binary classification tasks. When it comes to image classification for detecting ripe and unripe oranges, SVM's efficiency depends on several factors, including the choice of features and the quality of the dataset.
@@ -56,58 +55,35 @@ Here's how SVM can efficiently utilize the features mentioned in the Features se
 ******
 # Description
 
-This code is for training an image classification model using Support Vector Machines (SVMs) to classify images of ripe and unripe oranges. 
+For classifiaction of orange we use HSV_Histogram feature extraction for SVM.
 
-1. It loads images of ripe and unripe oranges from specified directories, resizes them to a standard size, flattens the pixel values into a 1D array, and assigns labels (0 for ripe oranges, 1 for unripe oranges).
+The project involves the following steps:
+1. Generating HSV histograms from images of oranges.
+2. Training an SVM model using these histograms to classify oranges as ripe or unripe.
+3. Evaluating the performance of the trained SVM model.
+4. Testing the trained model on new images.
 
-2. The data is split into training and testing sets.
-
-3. GridSearchCV is used to find the best hyperparameters for the SVM model by performing a grid search over a predefined parameter grid.
-
-4. The best model is trained using the training data.
-
-5. The model's accuracy is evaluated using the testing data, and a classification report is generated to assess its performance.
-
-6. The best model is saved for future use.
-
-7. Finally, the saved model is loaded, and an example image is provided to demonstrate how the model predicts whether the given orange is ripe or unripe, along with the probability scores for each class.
-
-****
-Getting Started
-
+******
 # Example
 our dtatset beging with under suppoertd light and train it othis below show some example of that 
+| Category | Image Example |
+|----------|---------------|
+| Ripe     | ![Ripe Orange](example_images/ripe_example.jpg) |
+| Unripe   | ![Unripe Orange](example_images/unripe_example.jpg) |
+
+**********
+## Installation
+
+``pip opencv-python scikit-learn numpy argparse``
+
+``pip install -r requirements.txt``
+
+**********
+## Contributing
 
 
+*******
+## License
 
-***********
-# Getting Started
-
-This code is for training a Support Vector Machine (SVM) model to classify images of ripe and unripe oranges. Here's a breakdown of what it does:
-
-Data Preparation:
-It loads images of ripe and unripe oranges from specified directories.
-Each image is resized to a standard size of 150x150 pixels and flattened into a 1D array.
-The pixel values are stored in flat_data_arr, and corresponding labels (0 for ripe, 1 for unripe) are stored in target_arr.
-
-Data Splitting:
-The data is split into training and testing sets using train_test_split() function from sklearn.model_selection.
-
-Parameter Grid Definition:
-A parameter grid is defined for the SVM model using different values of regularization parameter (C), kernel coefficient (gamma), and kernel type (rbf or poly).
-
-Model Training:
-A SVM classifier with probability estimation enabled (probability=True) is created.
-GridSearchCV is used to find the best combination of hyperparameters by exhaustively searching over the parameter grid.
-
-Model Evaluation:
-The best model is evaluated using the testing data.
-Accuracy and a classification report showing precision, recall, and F1-score for each class are printed.
-
-Model Saving and Loading:
-The best model is saved using joblib.dump() for future use.
-The saved model is loaded back into memory using joblib.load().
-
-Prediction:
-An example image is read and resized for prediction.
-The model predicts whether the given orange is ripe or unripe, along with the probability scores for each class.
+*******
+## About Us
