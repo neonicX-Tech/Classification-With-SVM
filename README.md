@@ -80,12 +80,15 @@ our dataset begins with images captured under varying lighting conditions. Below
 
  **`pip install -r requirements.txt`**
 
-**********
+********
 ## Contributing
 
 
 *******
 ## License
 
+This project is licensed under the GNU Lesser General Public License v2.1. See the ![Logo](logo.png) file for details.
+
 *******
+
 ## About Us
