@@ -23,11 +23,11 @@ Oranges undergo color changes as they ripen, making it feasible to classify thei
 ## Overview
 
 The goal of this project is to develop a robust model capable of accurately distinguishing between ripe and unripe oranges based on their visual characteristics in images.
-The SVM algorithm is chosen for its effectiveness in binary classification tasks and its ability to handle high-dimensional feature spaces.
+The SVM algorithm is chosen for its effectiveness in binary classification tasks and its ability to handle high-dimensional feature spaces.📈📉
 🍊🍈🍊
 **********
 ## Features
-
+🧨🚀🚀
 Support Vector Machines (SVMs) offer several benefits for image classification.
 Support Vector Machines (SVMs) excel in image classification due to their ability to effectively handle high-dimensional data, prevent overfitting, and generalize well with small to medium-sized datasets.
 SVMs are memory-efficient and offer interpretable decision boundaries, making them a powerful choice for image classification tasks.
@@ -53,7 +53,8 @@ Support Vector Machine (SVM) is known for its efficiency in handling high-dimens
 
 ******
 # Description
-🍈🍈🍈
+📈📉📊
+
 For the classification of oranges, we use HSV histogram feature extraction in the section of color features for the SVM model.
 
 The project involves the following steps:
@@ -74,7 +75,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 **********
 ## Installation
 
- **Dependencies:** Install the necessary Python libraries
+⚡⚡ **Dependencies:** Install the necessary Python libraries⚡⚡
 
  **`pip opencv-python scikit-learn numpy argparse`**
 
