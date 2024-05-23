@@ -27,7 +27,7 @@ The SVM algorithm is chosen for its effectiveness in binary classification tasks
 🍊🍈🍊
 **********
 ## Features
-🧨🚀🚀
+🌎🚀
 Support Vector Machines (SVMs) offer several benefits for image classification.
 Support Vector Machines (SVMs) excel in image classification due to their ability to effectively handle high-dimensional data, prevent overfitting, and generalize well with small to medium-sized datasets.
 SVMs are memory-efficient and offer interpretable decision boundaries, making them a powerful choice for image classification tasks.
@@ -53,14 +53,14 @@ Support Vector Machine (SVM) is known for its efficiency in handling high-dimens
 
 ******
 # Description
-📈📉📊
+📊📈📉📊
 
 For the classification of oranges, we use HSV histogram feature extraction in the section of color features for the SVM model.
 
 The project involves the following steps:
 1. Generating HSV histograms from images of oranges.
 2. Training an SVM model using these histograms to classify oranges as ripe or unripe.
-3. Evaluating the performance of the trained SVM model.
+3. Evaluating the performance of the trained SVM model.📊
 4. Testing the trained model on new images.
 
 ******
@@ -84,7 +84,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 ********
 ## Contributing
 
-Contact our LinkedIn: [https://www.linkedin.com/company/neonicx/about/]
+📌✉ Contact our LinkedIn: [https://www.linkedin.com/company/neonicx/about/]
 
 
 *******
@@ -99,5 +99,5 @@ For the closed-source version of DATASET-COMPRESSION-LIBRARY or commercial purpo
 
 ## About Us
 
-At neonicX, We redefine innovation in digital system design and hardware development. Our journey covers engineering from A to Z, providing complex end-to-end development solutions with our full-stack team.​​​​​​​
+📧📍 At neonicX, We redefine innovation in digital system design and hardware development. Our journey covers engineering from A to Z, providing complex end-to-end development solutions with our full-stack team.​​​​​​​
 [https://www.linkedin.com/company/neonicx/about/]
