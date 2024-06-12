@@ -32,7 +32,11 @@ import argparse
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
-def generate_hsv_histogram(image, hue_bins=8, saturation_bins=2, value_bins=4):
+from pathlib import Path
+
+ROOT =  Path.cwd()
+
+def generate_hsv_histogram(image, num_hue_bins=8, saturation_range_bins=2, value_intensity_bins=4):
     """
     Generate a normalized HSV histogram for an image.
 
@@ -49,7 +53,7 @@ def generate_hsv_histogram(image, hue_bins=8, saturation_bins=2, value_bins=4):
     hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     
     # Define the number of bins and the range for each channel
-    hist_size = [hue_bins, saturation_bins, value_bins]
+    hist_size = [num_hue_bins, saturation_range_bins, value_intensity_bins]
     hist_range = [0, 180, 0, 256, 0, 256]
 
     # Calculate the histogram
@@ -60,22 +64,19 @@ def generate_hsv_histogram(image, hue_bins=8, saturation_bins=2, value_bins=4):
     
     return hist
 
-def generate_histograms_from_folder(folder_path):
+def load_and_preprocess_data(folder_path):
     """
-    Generates HSV histograms for all images in a given directory and assigns labels based on the folder name.
+    Loads images from a folder, generates HSV histograms, and assigns labels based on folder name.
 
     Parameters:
     - folder_path: Path to the main directory containing subfolders of images.
 
     Returns:
-    - histograms: A NumPy array of histograms for all images.
+    - features: A NumPy array of flattened HSV histograms for all images.
     - labels: A NumPy array of labels corresponding to the histograms.
     """
-
     # Initialize empty lists to store histograms and labels
-    histograms = []
-    labels = []
-
+    histograms, labels = [], []
     # Iterate through each folder in the given directory
     for folder in os.listdir(folder_path):
         folder_label = folder
@@ -92,20 +93,17 @@ def generate_histograms_from_folder(folder_path):
             if image is None:
                 print(f"Error: Image '{filename}' not found!")
                 continue
-
+            
             # Generate the HSV histogram for the image
             hist = generate_hsv_histogram(image)
-            # Append the histogram and label to their respective lists
-            histograms.append(hist)
+            histograms.append(hist.flatten())
             labels.append(label)
 
     # Convert the lists of histograms and labels to NumPy arrays
-    histograms = np.array(histograms)
+    features = np.array(histograms)
     labels = np.array(labels)
 
-    # Return the histograms and labels as NumPy arrays
-    return histograms, labels
-
+    return features, labels
 
 def train_svm(features, labels, C=1.0, gamma=0.1, kernel=cv2.ml.SVM_RBF):
     """
@@ -146,7 +144,7 @@ def train_svm(features, labels, C=1.0, gamma=0.1, kernel=cv2.ml.SVM_RBF):
 
 
 
-def evaluate_svm(svm, x_test, y_test, model_filename='svm_data_1.dat'):
+def evaluate_svm(svm, x_test, y_test, model_filename='svm_data.dat'):
     """
     Evaluates the performance of the SVM model on the test dataset and saves the trained model.
 
@@ -154,7 +152,7 @@ def evaluate_svm(svm, x_test, y_test, model_filename='svm_data_1.dat'):
     - svm: The trained SVM model.
     - x_test: The test data features.
     - y_test: The true labels for the test data.
-    - model_filename: The filename to save the trained SVM model (default is 'svm_data_1.dat').
+    - model_filename: The filename to save the trained SVM model (default is 'svm_data.dat').
     """
     
     # Save the trained SVM model to a file
@@ -182,32 +180,68 @@ def evaluate_svm(svm, x_test, y_test, model_filename='svm_data_1.dat'):
     conf_matrix = confusion_matrix(y_test, y_pred)
     print(conf_matrix)
 
+def parse_arguments():
+    """Parses command-line arguments for SVM model testing.
+
+    Returns:
+        Namespace: An object containing parsed arguments.
+    """
+    parser = argparse.ArgumentParser(description="Train an SVM model for Orange Ripeness Detection")
+    parser.add_argument(
+        '-d','--dataset-folder',
+        type=str,
+        default=os.path.join(ROOT, 'orange_dataset'),
+        help='Path to the dataset folder'
+    )
+    parser.add_argument(
+        '--kernel',
+        type=str,
+        default=cv2.ml.SVM_RBF,
+        help='Kernel type for SVM'
+    )
+    parser.add_argument(
+        '--C',
+        type=float,
+        default=1.0,
+        help='Regularization parameter'
+    )
+    parser.add_argument(
+        '--gamma',
+        type=float,
+        default=0.1,
+        help='Kernel coefficient for RBF'
+    )
+    parser.add_argument(
+        '--model-filename',
+        type=str,
+        default='svm_data.dat',
+        help='Filename to save the trained SVM model'
+    )
+
+    return parser.parse_args()
 
 
 def main(args):
-    # Get the input path for the dataset folder from the arguments
-    input_path = args.dataset_folder
+    """
+    Main entry point for the script, handling data loading, training, and evaluation.
+
+    Parameters:
+    - args: Parsed arguments from the command line.
+    """
     
     # Generate histograms and corresponding labels from the input folder
-    histograms, extracted_labels = generate_histograms_from_folder(input_path)
-    print(histograms.shape)
-    # Split the data into training and testing sets
-    x_train, x_test, y_train, y_test = train_test_split(histograms, extracted_labels, test_size=0.2, random_state=42)
-    print(f"Training set size: {x_train.shape}, Testing set size: {x_test.shape}")
+    features, labels = load_and_preprocess_data(args.dataset_folder)
+
+    # Split data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
+    print(f"Training set size: {X_train.shape}, Testing set size: {X_test.shape}")
     
     # Train the SVM model using the training data
-    svm_model = train_svm(x_train, y_train, C=args.C, gamma=args.gamma, kernel=args.kernel)
+    svm_model = train_svm(X_train, y_train, C=args.C, gamma=args.gamma, kernel=args.kernel)
     
     # Evaluate the trained SVM model using the testing data
-    evaluate_svm(svm_model, x_test, y_test, model_filename=args.model_filename)
+    evaluate_svm(svm_model, X_test, y_test, model_filename=args.model_filename)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train an SVM model for Orange Ripeness Detection")
-    parser.add_argument('-d','--dataset_folder', default="/content/drive/MyDrive/orange_dataset", type=str, help='Path to the dataset folder')
-    parser.add_argument('--kernel', type=str, default=cv2.ml.SVM_RBF, help='Kernel type for SVM')
-    parser.add_argument('--C', type=float, default=1.0, help='Regularization parameter')
-    parser.add_argument('--gamma', type=float, default=0.1, help='Kernel coefficient for RBF')
-    parser.add_argument('--model_filename', type=str, default='svm_data_1.dat', help='Filename to save the trained SVM model')
-
-    args = parser.parse_args()
+    args = parse_arguments()
     main(args)
