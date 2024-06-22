@@ -54,6 +54,25 @@ def generate_hsv_histogram(image:np.ndarray) -> np.ndarray:
     hist = cv2.normalize(hist, hist).flatten()
     return hist
 
+def draw(image_path:str, label:str ) -> None:
+    try:
+        # Load the image
+        image = cv2.imread(image_path)
+        image = cv2.resize(image, (640, 480))
+        if image is None:
+            raise FileNotFoundError(f"Image not found: {image_path}")
+        
+        image = cv2.putText(image, label, (15, 30), 1, 2, (140, 0, 0), 2, 1)
+        cv2.imshow('Detected', image)
+        if cv2.waitKey() == ord('q'): cv2.destroyAllWindows()
+        
+        return None
+
+    except (FileNotFoundError, Exception) as e:
+        print(f"Error processing image: {e}")
+        return None
+
+
 def test_svm_with_image(image_path:str, svm_model:cv2.ml.SVM) -> int:
     """
     Tests the SVM model with a given image.
@@ -98,6 +117,9 @@ def parse_arguments():
         '-i', '--image-path', type=str, required=True, help='Path to the test image file'
     )
     parser.add_argument(
+        '--view', type=bool, default=True, help='show output image'
+    )
+    parser.add_argument(
         '--model-filename',
         type=str,
         default=os.path.join(ROOT, 'svm_data.dat'), 
@@ -129,6 +151,8 @@ def main(args) -> None:
         labels = ["unripe", "ripe"]
         # Print the predicted label
         print("Predicted Label:", labels[predicted_label])
+        if args.view:
+            image = draw(args.image_path, labels[predicted_label])
     else:
         # Handle cases where prediction fails (e.g., error during processing)
         print("Prediction failed. Check the image or model.")
