@@ -73,13 +73,40 @@ our dataset begins with images captured under varying lighting conditions. Below
 | Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/5.jpg)|
 
 **********
-## Installation
+## Usage
 
-⚡⚡ **Dependencies:** Install the necessary Python libraries⚡⚡
+1. Prerequisites:
 
- **`pip opencv-python scikit-learn numpy argparse`**
+- Python 3
+- pip
+- virtualenv
 
- **`pip install -r requirements.txt`**
+2. Clone the Project:
+  Use the following command to clone the project repository from GitHub:
+
+  `git clone https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM.git`
+
+3. Set Up Development Environment:
+  Activate a virtual environment to isolate project dependencies. Here's how to do it:
+
+  ```bash
+  cd Recognet-Oranges-With-SVM  # Navigate to the project directory
+  virtualenv venv  # Create a virtual environment named venv
+  source venv/bin/activate  # Activate the virtual environment
+  ```
+  Once activated, install the required dependencies listed in the project's `requirements.txt` file:
+
+  `pip install -r requirements.txt`
+
+4. Train the SVM Model:
+  Train the SVM model on your dataset of orange images. Replace `<dataset_folder>` with the actual path to the folder containing your training images:
+  
+  `python train.py --dataset-folder <dataset_folder>`
+
+5. Detect Objects in Images:
+  Use the trained model to detect oranges in a new image. Replace `<image_path>` with the path to the image you want to analyze:
+
+  `python detect.py --image-path <image_path>`
 
 ********
 ## Contributing
