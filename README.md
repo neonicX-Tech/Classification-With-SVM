@@ -3,7 +3,7 @@
 
 This project contains machine learning aimed at classifying images of oranges into ripe and unripe categories using the Support Vector Machine (SVM) algorithm. SVM is a powerful supervised learning algorithm commonly used for classification tasks.
 Oranges undergo color changes as they ripen, making it feasible to classify their ripeness based on image analysis. This project utilizes SVM, a supervised machine learning algorithm, to classify oranges as ripe or unripe by training on a dataset of labeled orange images.
-🍊🍋🍊🍋🍊🍋
+🍊🍈🍊🍈🍊🍈
 
 *************
 
