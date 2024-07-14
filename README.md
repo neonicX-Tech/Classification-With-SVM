@@ -1,4 +1,4 @@
-
+![image](https://github.com/user-attachments/assets/5a106f0e-fde0-4381-a405-38c7aed7ed6e)
 # Orange Ripeness Classifier
 
 This project contains machine learning aimed at classifying images of oranges into ripe and unripe categories using the Support Vector Machine (SVM) algorithm. SVM is a powerful supervised learning algorithm commonly used for classification tasks.
@@ -92,7 +92,8 @@ our dataset begins with images captured under varying lighting conditions. Below
   ```bash
   cd Recognet-Oranges-With-SVM  # Navigate to the project directory
   virtualenv venv  # Create a virtual environment named venv
-  source venv/bin/activate  # Activate the virtual environment
+  source venv/bin/activate  # Activate the virtual environment in linux
+  venv\Scripts\activate # Activate the virtual environment in windows
   ```
   Once activated, install the required dependencies listed in the project's `requirements.txt` file:
 
