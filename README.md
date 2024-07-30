@@ -86,7 +86,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 2. Clone the Project:
   Use the following command to clone the project repository from GitHub:
 
-  `git clone https://github.com/neonicX-Tech/Recognet-With-SVM.git -b ski-learn`
+  `git clone https://github.com/neonicX-Tech/Recognet-With-SVM.git -b svm-scikit-learn`
 
 3. Set Up Development Environment:
   Activate a virtual environment to isolate project dependencies. Here's how to do it:
@@ -107,7 +107,8 @@ our dataset begins with images captured under varying lighting conditions. Below
   `python train.py `
 
    Or replace `<dataset_folder>` with the actual path to the folder containing your training images:
-  `python train.py --dataset-folder <dataset_folder>`
+   
+   `python train.py --dataset-folder <dataset_folder>`
 
 5. Detect Objects in Images:
   Use the trained model to detect oranges in a new image. Replace `<image_path>` with the path to the image you want to analyze:
