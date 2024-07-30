@@ -1,91 +1,170 @@
+
+"""
+Recognet-Oranges-With-SVM
+Copyright (C) <2024/7/30> <neonicX-Tech>
+
+svm_orange_train is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+"""
+
 import pandas as pd
 import os
 import cv2
-from skimage.transform import resize
-from skimage.io import imread
+import joblib
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 from tqdm import tqdm
-from google.colab.patches import cv2_imshow
+import argparse
+from pathlib import Path
 
-Categories = ['ripe', 'unripe']
-flat_data_arr = []  # input array
-target_arr = []  # output array
-datadir = 'dataset/'
+ROOT =  Path.cwd()
 
-for i in Categories:
-    print(f'loading... category : {i}')
-    path = os.path.join(datadir, i)
-    for img in tqdm(os.listdir(path), desc=f'Loading category {i}'):
-        img_array = cv2.imread(os.path.join(path, img))
-        newimg = img_array
+def load_and_preprocess_data(folder_path:str, categories:list)-> tuple[np.array, np.array]:
+    """
+    Loads images from a folder, generates HSV histograms, and assigns labels based on folder name.
 
-        if img_array.shape[0] > img_array.shape[1]:
-            newimg = 255 * np.ones((img_array.shape[0], img_array.shape[0], 3), dtype=float)
-            newimg[:, :img_array.shape[1], :] = img_array
-        elif img_array.shape[0] < img_array.shape[1]:
-            newimg = 255 * np.ones((img_array.shape[1], img_array.shape[1], 3), dtype=float)
-            newimg[:img_array.shape[0], :, :] = img_array
-        else:
-            newimg = 255 * np.ones((img_array.shape[1], img_array.shape[1], 3), dtype=float)
-            newimg = img_array
+    Parameters:
+    - folder_path: Path to the main directory containing subfolders of images.
 
-        img_resized = cv2.resize(newimg, (150, 150))
-        flat_data_arr.append(img_resized.flatten())
-        target_arr.append(Categories.index(i))
-    print(f'loaded category:{i} successfully')
+    Returns:
+    - features: A NumPy array of flattened all images.
+    - targets: A NumPy array of labels corresponding to the images.
+    """
+    # Initialize empty lists to store histograms and labels
+    features, target = [], []
+    # Iterate through each folder in the given directory
+    for i in categories:
+        print(f'loading... category: {i}')
+        path = os.path.join(folder_path, i)
+        for img in tqdm(os.listdir(path), desc=f'Loading category {i}'):
+            img_array = cv2.imread(os.path.join(path, img))
+            padded_img = img_array
 
-flat_data = np.array(flat_data_arr)
-target = np.array(target_arr)
+            if img_array.shape[0] > img_array.shape[1]:
+                padded_img = 255 * np.ones((img_array.shape[0], img_array.shape[0], 3), dtype=float)
+                padded_img[:, :img_array.shape[1], :] = img_array
+            elif img_array.shape[0] < img_array.shape[1]:
+                padded_img = 255 * np.ones((img_array.shape[1], img_array.shape[1], 3), dtype=float)
+                padded_img[:img_array.shape[0], :, :] = img_array
+            else:
+                padded_img = 255 * np.ones((img_array.shape[1], img_array.shape[1], 3), dtype=float)
+                padded_img = img_array
 
-# Dataframe
-df = pd.DataFrame(flat_data)
-df['Target'] = target
+            resized_img = cv2.resize(padded_img, (150, 150))
+            features.append(resized_img.flatten())
+            target.append(categories.index(i))
+        print(f'loaded category: {i} successfully')
 
-# Input data
-x = df.iloc[:, :-1]
-# Output data
-y = df.iloc[:, -1]
+    # Convert the lists of features and targets to NumPy arrays
+    features = np.array(features)
+    targets = np.array(target)
 
-# Splitting the data into training and testing sets
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=77, stratify=y)
+    return features, targets
 
-# Defining the parameters grid for manual GridSearchCV
-param_grid = {
-    'C': [0.1, 1, 10, 100],
-    'gamma': [0.0001, 0.001, 0.1, 1],
-    'kernel': ['rbf', 'poly']
-}
+def parse_arguments():
+    """Parses command-line arguments for SVM model testing.
 
-best_score = 0
-best_params = None
+    Returns:
+        Namespace: An object containing parsed arguments.
+    """
+    parser = argparse.ArgumentParser(description="Train an SVM model for Orange Ripeness Detection")
+    parser.add_argument(
+        '-d','--dataset-folder',
+        type=str,
+        default=os.path.join(ROOT, 'dataset'),
+        help='Path to the dataset folder'
+    )
+    parser.add_argument(
+        '--kernel',
+        type=str,
+        default='poly',
+        help='Kernel type for SVM'
+    )
+    parser.add_argument(
+        '--C',
+        type=float,
+        default=0.1,
+        help='Regularization parameter'
+    )
+    parser.add_argument(
+        '--gamma',
+        type=float,
+        default=0.0001,
+        help='Kernel coefficient for RBF'
+    )
+    parser.add_argument(
+        '--model-filename',
+        type=str,
+        default='best_svc_model.dat',
+        help='Filename to save the trained SVM model'
+    )
+    parser.add_argument(
+        '--categories',
+        metavar='N',
+        type=str,
+        nargs='+',
+        default=['ripe', 'unripe'], 
+        help='list of trained model categories with a default of ["ripe", "unripe"].'
+    )
 
-# Manually perform grid search with progress bar
-total_params = len(param_grid['C']) * len(param_grid['gamma']) * len(param_grid['kernel'])
-progress = tqdm(total=total_params, desc='Training model')
+    return parser.parse_args()
 
-for C in param_grid['C']:
-    for gamma in param_grid['gamma']:
-        for kernel in param_grid['kernel']:
-            svc = svm.SVC(C=C, gamma=gamma, kernel=kernel, probability=True)
-            svc.fit(x_train, y_train)
-            score = svc.score(x_test, y_test)
-            if score > best_score:
-                best_score = score
-                best_params = {'C': C, 'gamma': gamma, 'kernel': kernel}
-            progress.update(1)
 
-progress.close()
+def main(args):
+    """
+    Main entry point for the script, handling data loading, training, and evaluation.
 
-# Train the best model with the best parameters found
-best_svc = svm.SVC(**best_params, probability=True)
-best_svc.fit(x_train, y_train)
+    Parameters:
+    - args: Parsed arguments from the command line.
+    """
+    # Generate histograms and corresponding labels from the input folder
+    features, target = load_and_preprocess_data(args.dataset_folder, args.categories)
 
-# Evaluate the model
-y_pred = best_svc.predict(x_test)
-print(f'Best Parameters: {best_params}')
-print(f'Accuracy: {accuracy_score(y_test, y_pred)}')
-print(f'Classification Report:\n{classification_report(y_test, y_pred)}')
+    # Dataframe
+    df = pd.DataFrame(features)
+    df['Target'] = target
+    # Input data
+    x = df.iloc[:, :-1]
+    # Output data
+    y = df.iloc[:, -1]
+    x_train, x_test, y_train, y_test = train_test_split(x, 
+                                                        y, 
+                                                        test_size=0.20, 
+                                                        random_state=77, 
+                                                        stratify=y
+                                                        )
+    print('Start training... ')
+    svc = svm.SVC(C=args.C, 
+                  gamma=args.gamma, 
+                  kernel=args.kernel, 
+                  probability=True
+                  )
+    
+    svc.fit(x_train, y_train)
+    # Evaluate the model
+    y_pred = svc.predict(x_test)
+    print(f'Accuracy: {accuracy_score(y_test, y_pred)}')
+    print(f'Classification Report:\n{classification_report(y_test, y_pred)}')
+    # Save the model
+    joblib.dump(svc, 'svc_model.dat')
+    print('The model was saved in svc_model.dat')
+
+
+if __name__ == "__main__":
+    args = parse_arguments()
+    main(args)
+
+
