@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/5a106f0e-fde0-4381-a405-38c7aed7ed6e)
 # Orange Ripeness Classifier
 
 This project contains machine learning aimed at classifying images of oranges into ripe and unripe categories using the Support Vector Machine (SVM) algorithm. SVM is a powerful supervised learning algorithm commonly used for classification tasks.
@@ -14,6 +13,7 @@ Oranges undergo color changes as they ripen, making it feasible to classify thei
   - [Features](#features)
     - [Efficiency](#efficiency)
   - [Example](#example)
+  - [Usage](#Usage)
   - [Installation](#installation)
   - [Contributing](#contributing)
   - [License](#license)
@@ -69,11 +69,11 @@ our dataset begins with images captured under varying lighting conditions. Below
 
 | Category | Image Example |
 |----------|---------------|
-| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/3.jpg)|
-| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/5.jpg)|
+| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/main/image_result/3.jpg)|
+| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/main/image_result/5.jpg)|
 
 **********
-## Usage
+# Usage
 
 1. Prerequisites:
 
@@ -84,7 +84,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 2. Clone the Project:
   Use the following command to clone the project repository from GitHub:
 
-  `git clone https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM.git`
+  `git clone https://github.com/neonicX-Tech/Recognet-With-SVM.git`
 
 3. Set Up Development Environment:
   Activate a virtual environment to isolate project dependencies. Here's how to do it:
@@ -107,7 +107,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 5. Detect Objects in Images:
   Use the trained model to detect oranges in a new image. Replace `<image_path>` with the path to the image you want to analyze:
 
-  `python detect.py --image-path <image_path>`
+  `python detect.py -i <image_path>`
 
 ********
 ## Contributing
