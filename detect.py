@@ -87,7 +87,7 @@ def parse_arguments():
     parser.add_argument(
         '--model-filename',
         type=str,
-        default=os.path.join(ROOT, 'svc_model.dat'), 
+        default=os.path.join(ROOT, 'svm_model.dat'), 
         help='Filename of the trained SVM model to load (default: ROOT/best_svc_model.dat)'
     )
     parser.add_argument(

@@ -147,6 +147,7 @@ def main(args):
                                                         stratify=y
                                                         )
     print('Start training... ')
+    print(f'C: {args.C}\ngamma: {args.gamma}\nkernel: {args.kernel}')
     svc = svm.SVC(C=args.C, 
                   gamma=args.gamma, 
                   kernel=args.kernel, 
@@ -159,7 +160,7 @@ def main(args):
     print(f'Accuracy: {accuracy_score(y_test, y_pred)}')
     print(f'Classification Report:\n{classification_report(y_test, y_pred)}')
     # Save the model
-    joblib.dump(svc, 'svc_model.dat')
+    joblib.dump(svc, 'svm_model.dat')
     print('The model was saved in svc_model.dat')
 
 
