@@ -157,7 +157,8 @@ def main(args):
     svc.fit(x_train, y_train)
     # Evaluate the model
     y_pred = svc.predict(x_test)
-    print(f'Accuracy: {accuracy_score(y_test, y_pred)}')
+    accuracy = round(accuracy_score(y_test, y_pred) * 100, 2)
+    print(f'Accuracy: {accuracy} %')
     print(f'Classification Report:\n{classification_report(y_test, y_pred)}')
     # Save the model
     joblib.dump(svc, 'svm_model.dat')

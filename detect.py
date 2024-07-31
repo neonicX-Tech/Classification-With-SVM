@@ -31,7 +31,7 @@ def draw(image_path:str, label:str ) -> None:
     try:
         # Load the image
         image = cv2.imread(image_path)
-        # image = cv2.resize(image, (640, 480))
+        image = cv2.resize(image, (640, 480))
         if image is None:
             raise FileNotFoundError(f"Image not found: {image_path}")
         
@@ -121,7 +121,8 @@ def main(args) -> None:
     if prediction is not None:
         print(f'Predicted label: {args.categories[prediction[0]]}')
         if args.view:
-            image = draw(args.image_path, args.categories[prediction[0]])
+            label = f"Class: {args.categories[prediction[0]]}"
+            image = draw(args.image_path, label)
     else:
         # Handle cases where prediction fails (e.g., error during processing)
         print("Prediction failed. Check the image or model.")
