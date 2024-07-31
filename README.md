@@ -69,8 +69,8 @@ our dataset begins with images captured under varying lighting conditions. Below
 
 | Category | Image Example |
 |----------|---------------|
-| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/main/image_result/3.jpg)|
-| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/main/image_result/5.jpg)|
+| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/svm-opencv/image_result/3.jpg)|
+| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/svm-opencv/image_result/5.jpg)|
 
 **********
 # Usage
