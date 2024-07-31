@@ -84,7 +84,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 2. Clone the Project:
   Use the following command to clone the project repository from GitHub:
 
-  `git clone https://github.com/neonicX-Tech/Recognet-With-SVM.git`
+  `git clone https://github.com/neonicX-Tech/Recognet-With-SVM.git -b svm-opencv`
 
 3. Set Up Development Environment:
   Activate a virtual environment to isolate project dependencies. Here's how to do it:
