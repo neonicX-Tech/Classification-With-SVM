@@ -71,8 +71,8 @@ our dataset begins with images captured under varying lighting conditions. Below
 
 | Category | Image Example |
 |----------|---------------|
-| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/3.jpg)|
-| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-Oranges-With-SVM/blob/main/image_result/5.jpg)|
+| Ripe     | ![Ripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/svm-opencv/image_result/3.jpg)|
+| Unripe   | ![Unripe Orange](https://github.com/neonicX-Tech/Recognet-With-SVM/blob/svm-opencv/image_result/5.jpg)|
 
 **********
 # Usage
@@ -114,6 +114,10 @@ our dataset begins with images captured under varying lighting conditions. Below
   Use the trained model to detect oranges in a new image. Replace `<image_path>` with the path to the image you want to analyze:
 
   `python detect.py -i <image_path>`
+
+  By default, this script only outputs the class names of objects detected in the image. To visualize the image with these detections overlaid, use the `--view` flag:
+
+  `python detect.py -i <image_path> --view `
 
 ********
 ## Contributing
