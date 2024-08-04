@@ -162,7 +162,7 @@ def main(args):
     print(f'Classification Report:\n{classification_report(y_test, y_pred)}')
     # Save the model
     joblib.dump(svc, 'svm_model.dat')
-    print('The model was saved in svc_model.dat')
+    print('The model was saved in svm_model.dat')
 
 
 if __name__ == "__main__":
