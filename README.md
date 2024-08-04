@@ -92,7 +92,7 @@ our dataset begins with images captured under varying lighting conditions. Below
   Activate a virtual environment to isolate project dependencies. Here's how to do it:
 
   ```bash
-  cd Recognet-With-SVM  # Navigate to the project directory
+  cd Classification-With-SVM  # Navigate to the project directory
   virtualenv venv  # Create a virtual environment named venv
   source venv/bin/activate  # Activate the virtual environment in linux
   venv\Scripts\activate # Activate the virtual environment in windows
