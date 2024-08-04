@@ -86,7 +86,7 @@ our dataset begins with images captured under varying lighting conditions. Below
 2. Clone the Project:
   Use the following command to clone the project repository from GitHub:
 
-  `git https://github.com/neonicX-Tech/Classification-With-SVM.git -b svm-scikit-learn`
+  `git clone https://github.com/neonicX-Tech/Classification-With-SVM.git -b svm-scikit-learn`
 
 3. Set Up Development Environment:
   Activate a virtual environment to isolate project dependencies. Here's how to do it:
